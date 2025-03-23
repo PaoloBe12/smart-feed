@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ApiResponse;
 use App\Models\Trend;
 use Illuminate\Http\Request;
 
@@ -22,11 +23,13 @@ class TrendController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Display a listing of the resource of today.
      */
     public function today()
     {
-        $trends = Trend::whereDate('date', today())->get();
+        $trends = Trend::whereDate('date', today())
+            ->paginate(10);
+
         return response()->json($trends);
     }
 
@@ -43,7 +46,7 @@ class TrendController extends Controller
         ]);
 
         $trend = Trend::create($validated);
-        return response()->json($trend);
+        return ApiResponse::success($trend, "Trend creato con successo!", 200);
     }
 
     /**
@@ -71,7 +74,7 @@ class TrendController extends Controller
 
         $trend->update($validated);
 
-        return response()->json($trend);
+        return ApiResponse::success($trend, "Trend modificato con successo!", 200);
     }
 
     /**
@@ -82,6 +85,6 @@ class TrendController extends Controller
         $trend = Trend::findOrFail($id);
 
         $trend->delete($trend);
-        return response()->json($trend);
+        return ApiResponse::success($trend, "Trend eliminato con successo!", 200);
     }
 }

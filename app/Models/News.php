@@ -12,9 +12,9 @@ class News extends Model
     protected $fillable = [
         'trend_id',
         'title',
-        'url',
-        'published_at',
-        'source'
+        'description',
+        'full_text',
+        'seo_score',
     ];
 
     public function trend()

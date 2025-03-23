@@ -77,19 +77,19 @@ Route::prefix('v1')->group(function () {
 });
 
 
-Route::fallback(function () {
+// Route::fallback(function () {
 
-    $segment = request()->segment(1);
+//     $segment = request()->segment(1);
 
-    return match ($segment) {
-        'trends' => redirect()->route('trends.index'),
-        'news' => redirect()->route('news.index'),
-        'contents' => redirect()->route('contents.index'),
-        'custom-inputs' => redirect()->route('custom-inputs.index'),
-        'ai-feedback' => redirect()->route('ai-feedback.index'),
-        'discarded-ideas' => redirect()->route('discarded-ideas.index'),
-        'newsletter-logs' => redirect()->route('newsletter-logs.index'),
-        'logs' => redirect()->route('logs.index'),
-        default => response()->json(['message' => 'Endpoint non trovato'], 404)
-    };
-});
+//     return match ($segment) {
+//         'trends' => redirect()->route('trends.index'),
+//         'news' => redirect()->route('news.index'),
+//         'contents' => redirect()->route('contents.index'),
+//         'custom-inputs' => redirect()->route('custom-inputs.index'),
+//         'ai-feedback' => redirect()->route('ai-feedback.index'),
+//         'discarded-ideas' => redirect()->route('discarded-ideas.index'),
+//         'newsletter-logs' => redirect()->route('newsletter-logs.index'),
+//         'logs' => redirect()->route('logs.index'),
+//         default => response()->json(['message' => 'Endpoint non trovato'], 404)
+//     };
+// });
