@@ -35,7 +35,15 @@ class TrendController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'topic' => 'required|string|max:255',
+            'country' => 'required|string|max:10',
+            'date' => 'required|date'
+        ]);
+
+        $trend = Trend::create($validated);
+        return response()->json($trend);
     }
 
     /**
@@ -52,7 +60,18 @@ class TrendController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $trend = Trend::findOrFail($id);
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'topic' => 'string|max:255',
+            'country' => 'string|max:10',
+            'date' => 'date'
+        ]);
+
+        $trend->update($validated);
+
+        return response()->json($trend);
     }
 
     /**
@@ -60,6 +79,9 @@ class TrendController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $trend = Trend::findOrFail($id);
+
+        $trend->delete($trend);
+        return response()->json($trend);
     }
 }

@@ -11,10 +11,9 @@ class Trend extends Model
 
     protected $fillable = [
         'name',
-        'query',
-        'date',
-        'source',
-        'popularity'
+        'topic',
+        'country',
+        'date'
     ];
 
     public function news()
