@@ -4,26 +4,34 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
+use App\Models\LogPublication;
 
 class News extends Model
 {
     use HasFactory;
 
+    protected $table = 'news';
+
     protected $fillable = [
-        'trend_id',
+        'topic_id',
         'title',
-        'description',
-        'full_text',
-        'seo_score',
+        'content',
+        'status',
+        'published_at',
     ];
 
-    public function trend()
+    // Relazione con TopicsSuggestion
+    public function topic(): BelongsTo
     {
-        return $this->belongsTo(Trend::class);
+        return $this->belongsTo(TopicsSuggestion::class);
     }
 
-    public function contents()
+    // Relazione con LogPublication
+    public function logPublications(): HasMany
     {
-        return $this->hasMany(Content::class);
+        return $this->hasMany(LogPublication::class);
     }
 }

@@ -2,7 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
+use App\Models\KeywordsPool;
+use App\Models\LogPublications;
+use App\Models\TopicsSuggestion;
+use App\Models\News;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -13,7 +16,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        // Create a set of Keywords
+        KeywordsPool::factory(10)->create();
 
+        // Create a set of Topics Suggestions
+        TopicsSuggestion::factory(20)->create();
+
+        // Create a set of News
+        News::factory(10)->create();
+
+        // Create a set of Log Publications
+        LogPublications::factory(5)->create();
     }
 }

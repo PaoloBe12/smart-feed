@@ -2,8 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\News;
-
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,23 +14,16 @@ class NewsFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    protected $model = News::class;
+    protected $model = \App\Models\News::class;
 
     public function definition(): array
     {
         return [
-            'trend_id' => $this->faker->randomDigitNotNull,
-            'title' => $this->faker->sentence(5),
-            'description' => $this->faker->paragraph(5),
-            'full_text' => $this->faker->paragraph(10),
-            'metadata' => json_encode([
-                'author' => $this->faker->name(),
-                'tags' => $this->faker->words(3),
-                'published_at' => $this->faker->dateTimeThisYear()->format('Y-m-d H:i:s'),
-            ]),
-            'seo_score' => $this->faker->randomDigitNotNull,
-            'created_at' => now(),
-            'updated_at' => now(),
+            'topic_id' => \App\Models\TopicsSuggestion::factory(),
+            'title' => $this->faker->sentence,
+            'content' => $this->faker->text,
+            'status' => $this->faker->randomElement(['draft', 'scheduled', 'published']),
+            'published_at' => now(),
         ];
     }
 }

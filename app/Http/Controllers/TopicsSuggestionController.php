@@ -2,14 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\TopicsSuggestion;
 use Illuminate\Http\Request;
 
-class NewsletterLogController extends Controller
+class TopicsSuggestionController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
+    {
+        //
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
     {
         //
     }
@@ -25,7 +34,15 @@ class NewsletterLogController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(TopicsSuggestion $topicsSuggestion)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(TopicsSuggestion $topicsSuggestion)
     {
         //
     }
@@ -33,7 +50,7 @@ class NewsletterLogController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, TopicsSuggestion $topicsSuggestion)
     {
         //
     }
@@ -41,7 +58,7 @@ class NewsletterLogController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(TopicsSuggestion $topicsSuggestion)
     {
         //
     }
