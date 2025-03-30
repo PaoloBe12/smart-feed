@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\LogPublication;
+use App\Models\LogPublications;
 use Illuminate\Http\Request;
 
-class LogPublicationController extends Controller
+class LogPublicationsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class LogPublicationController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(LogPublication $logPublication)
+    public function show(LogPublications $logPublication)
     {
         //
     }
@@ -42,7 +42,7 @@ class LogPublicationController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(LogPublication $logPublication)
+    public function edit(LogPublications $logPublication)
     {
         //
     }
@@ -50,7 +50,7 @@ class LogPublicationController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, LogPublication $logPublication)
+    public function update(Request $request, LogPublications $logPublication)
     {
         //
     }
@@ -58,7 +58,7 @@ class LogPublicationController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(LogPublication $logPublication)
+    public function destroy(LogPublications $logPublication)
     {
         //
     }

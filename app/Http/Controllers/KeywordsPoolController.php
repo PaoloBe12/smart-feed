@@ -2,18 +2,77 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ApiResponse;
 use App\Models\KeywordsPool;
 use Illuminate\Http\Request;
 
 class KeywordsPoolController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Retrieves keywords created today.
      */
     public function index()
     {
-        //
+        $keywords = KeywordsPool::whereDate('created_at', today())
+            ->orderBy('seo_score', 'desc')
+            ->get();
+
+        if ($keywords->isEmpty()) {
+            return ApiResponse::success($keywords, "Nessuna parola chiave trovata per oggi", 200);
+        }
+
+        return ApiResponse::success($keywords, "Parole chiave recuperate con successo", 200);
     }
+
+    /**
+     * Retrieves keywords created this week.
+     */
+    public function getThisWeekKeywords()
+    {
+        $keywords = KeywordsPool::whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()])
+            ->orderBy('seo_score', 'desc')
+            ->limit(10)
+            ->get();
+
+        if ($keywords->isEmpty()) {
+            return ApiResponse::success($keywords, "Nessuna parola chiave trovata per oggi", 200);
+        }
+
+        return ApiResponse::success($keywords, "Parole chiave recuperate con successo", 200);
+    }
+
+    /**
+     * Retrieves keywords created this month.
+     */
+    public function getThisMonthKeywords()
+    {
+        $keywords = KeywordsPool::whereMonth('created_at', now()->month)
+            ->orderBy('seo_score', 'desc')
+            ->limit(10)
+            ->get();
+
+        if ($keywords->isEmpty()) {
+            return ApiResponse::success($keywords, "Nessuna parola chiave trovata per oggi", 200);
+        }
+
+        return ApiResponse::success($keywords, "Parole chiave recuperate con successo", 200);
+    }
+
+    /**
+     * Retrieves all-time keywords.
+     */
+    public function getAllTimeKeywords()
+    {
+        $keywords = KeywordsPool::orderBy('seo_score', 'desc')
+            ->paginate(10);
+
+        if ($keywords->isEmpty()) {
+            return ApiResponse::success($keywords, "Nessuna parola chiave trovata per oggi", 200);
+        }
+
+        return ApiResponse::success($keywords, "Parole chiave recuperate con successo", 200);
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -34,9 +93,9 @@ class KeywordsPoolController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(KeywordsPool $keywordsPool)
+    public function show(string $id)
     {
-        //
+        return KeywordsPool::findOrFail($id);
     }
 
     /**

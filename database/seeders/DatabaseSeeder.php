@@ -19,13 +19,13 @@ class DatabaseSeeder extends Seeder
         // Create a set of Keywords
         KeywordsPool::factory(10)->create();
 
-        // Create a set of Topics Suggestions
-        TopicsSuggestion::factory(20)->create();
+        // // Create a set of Topics Suggestions
+        // TopicsSuggestion::factory(20)->create();
 
-        // Create a set of News
-        News::factory(10)->create();
+        // // Create a set of News
+        // News::factory(10)->create();
 
-        // Create a set of Log Publications
-        LogPublications::factory(5)->create();
+        // // Create a set of Log Publications
+        // LogPublications::factory(5)->create();
     }
 }

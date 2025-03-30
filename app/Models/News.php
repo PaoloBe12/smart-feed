@@ -32,6 +32,6 @@ class News extends Model
     // Relazione con LogPublication
     public function logPublications(): HasMany
     {
-        return $this->hasMany(LogPublication::class);
+        return $this->hasMany(LogPublications::class);
     }
 }

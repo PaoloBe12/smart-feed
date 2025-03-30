@@ -2,94 +2,44 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
 
-use App\Http\Controllers\TrendController;
+use App\Http\Controllers\KeywordsPoolController;
+use App\Http\Controllers\TopicsSuggestionController;
 use App\Http\Controllers\NewsController;
-use App\Http\Controllers\ContentController;
-use App\Http\Controllers\AiFeedbackController;
-use App\Http\Controllers\CustomInputController;
-use App\Http\Controllers\DiscardedIdeaController;
-use App\Http\Controllers\LogController;
-use App\Http\Controllers\NewsletterLogController;
+use App\Http\Controllers\LogPublicationsController;
+use App\Http\Controllers\NewsAnalysisController;
 
+use Illuminate\Support\Facades\Redirect;
+use Laravel\Prompts\Key;
 
 Route::prefix('v1')->group(function () {
-    Route::get('/trends/today', [TrendController::class, 'today']);
-    Route::apiResource('trends', TrendController::class)
-        ->missing(function (Request $request) {
-            return Redirect::route('trends.index');
-        });
 
-    Route::apiResource('news', NewsController::class)
-        ->missing(function (Request $request) {
-            return Redirect::route('news.index');
-        });
+    Route::get('/fetch-news', [NewsAnalysisController::class, 'fetchNews']);
+    Route::get('/analyze-news', [NewsAnalysisController::class, 'analyzeNews']);
+    Route::get('/filter-keywords', [NewsAnalysisController::class, 'filterKeywords']);
+    Route::get('/get-keywords', [NewsAnalysisController::class, 'getKeywords']);
+    
 
-    Route::get('/contents/active', [TrendController::class, 'active']);
-    Route::apiResource('contents', ContentController::class)
-        ->missing(function (Request $request) {
-            return Redirect::route('contents.index');
-        });
+    Route::get('/keywords/today', [KeywordsPoolController::class, 'index']);
+    Route::get('/keywords/week', [KeywordsPoolController::class, 'getThisWeekKeywords']);
+    Route::get('/keywords/month', [KeywordsPoolController::class, 'getThisMonthKeywords']);
+    Route::get('/keywords/all-time', [KeywordsPoolController::class, 'getAllTimeKeywords']);
+    Route::apiResource('keywords', KeywordsPoolController::class);
 
-    Route::resource('custom-inputs', CustomInputController::class)
-        ->only([
-            'index',
-            'store',
-            'destroy'
-        ])
-        ->missing(function (Request $request) {
-            return Redirect::route('custom-inputs.index');
-        });
+    Route::apiResource('topics', TopicsSuggestionController::class);
+    Route::apiResource('news', NewsController::class);
+    Route::apiResource('log-publications', LogPublicationsController::class);
 
-    Route::resource('ai-feedback', AiFeedbackController::class)
-        ->only([
-            'index',
-            'store',
-            'destroy'
-        ])
-        ->missing(function (Request $request) {
-            return Redirect::route('ai-feedback.index');
-        });
+    Route::fallback(function () {
 
-    Route::resource('discarded-ideas', DiscardedIdeaController::class)
-        ->only([
-            'index',
-            'store',
-            'destroy'
-        ])
-        ->missing(function (Request $request) {
-            return Redirect::route('discarded-ideas.index');
-        });
+        $segment = request()->segment(1);
 
-    Route::resource('newsletter-logs', NewsletterLogController::class)
-        ->only([
-            'index',
-            'show',
-        ])
-        ->missing(function (Request $request) {
-            return Redirect::route('discarded-ideas.index');
-        });
-
-    Route::get('/logs', [LogController::class, 'index']);
-
-
+        return match ($segment) {
+            'keywords' => redirect()->route('keywords.index'),
+            'topics' => redirect()->route('topics.index'),
+            'news' => redirect()->route('news.index'),
+            'log-publications' => redirect()->route('log-publications.index'),
+            default => response()->json(['message' => 'Endpoint non trovato'], 404)
+        };
+    });
 });
-
-
-// Route::fallback(function () {
-
-//     $segment = request()->segment(1);
-
-//     return match ($segment) {
-//         'trends' => redirect()->route('trends.index'),
-//         'news' => redirect()->route('news.index'),
-//         'contents' => redirect()->route('contents.index'),
-//         'custom-inputs' => redirect()->route('custom-inputs.index'),
-//         'ai-feedback' => redirect()->route('ai-feedback.index'),
-//         'discarded-ideas' => redirect()->route('discarded-ideas.index'),
-//         'newsletter-logs' => redirect()->route('newsletter-logs.index'),
-//         'logs' => redirect()->route('logs.index'),
-//         default => response()->json(['message' => 'Endpoint non trovato'], 404)
-//     };
-// });
